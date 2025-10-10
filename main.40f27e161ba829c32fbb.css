@@ -29,6 +29,11 @@
     color: #d44638; /* Email color */
 }
 
+
+.contact-icons a.github:hover {
+    color: #ffffff; /* Email color */
+}
+
 .contact-icons a.phone:hover {
     color: #25d366; /* WhatsApp/Phone color */
 }
