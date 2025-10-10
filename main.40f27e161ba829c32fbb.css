@@ -33,3 +33,6 @@
     color: #25d366; /* WhatsApp/Phone color */
 }
 
+.project__info{
+    z-index: 99999;
+}
