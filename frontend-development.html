@@ -1,0 +1,1469 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Frontend Development by Haris — responsive React, Next.js and TypeScript product interfaces built with clean structure and product-focused UX." />
+    <meta name="theme-color" content="#0d0d0d" />
+    <title>Frontend Development — Haris</title>
+    <link rel="icon" href="fav.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,700&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0d0d0d;
+            --bg-2: #151515;
+            --bg-3: #1c1c1c;
+            --card: #232323;
+            --card-2: #292929;
+            --text: #f5f5f1;
+            --muted: #a7a7a0;
+            --muted-2: #71716d;
+            --line: rgba(255, 255, 255, .09);
+            --line-2: rgba(255, 255, 255, .16);
+            --lime: #b8f52d;
+            --lime-soft: #d3ff73;
+            --max: 1180px;
+            --ease: cubic-bezier(.2, .8, .2, 1);
+            --shadow: 0 28px 90px rgba(0, 0, 0, .38);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 78px;
+            background: var(--bg)
+        }
+
+        body {
+            font-family: "Manrope", system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+            color: inherit
+        }
+
+        button {
+            cursor: pointer
+        }
+
+        img {
+            display: block;
+            max-width: 100%
+        }
+
+        ::selection {
+            background: rgba(184, 245, 45, .26);
+            color: #fff
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--lime);
+            outline-offset: 3px
+        }
+
+        .container {
+            width: min(calc(100% - 48px), var(--max));
+            margin-inline: auto
+        }
+
+        .section {
+            position: relative;
+            padding: 112px 0;
+            border-top: 1px solid var(--line)
+        }
+
+        .section.dark {
+            background: var(--bg)
+        }
+
+        .section.charcoal {
+            background: var(--bg-2)
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity .7s var(--ease), transform .7s var(--ease)
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--lime);
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .12em
+        }
+
+        .section-label:before {
+            content: "✳";
+            font-size: 10px
+        }
+
+        .section-title {
+            font: 800 clamp(38px, 5.2vw, 62px)/1.02 "Manrope", sans-serif;
+            letter-spacing: -.045em;
+            margin-top: 12px
+        }
+
+        .section-title em {
+            font-family: "Playfair Display", serif;
+            font-weight: 600
+        }
+
+        .section-copy {
+            margin-top: 16px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.85;
+            max-width: 650px
+        }
+
+        .header {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 72px;
+            z-index: 100;
+            border-bottom: 1px solid transparent;
+            transition: .25s
+        }
+
+        .header.scrolled {
+            background: rgba(13, 13, 13, .86);
+            backdrop-filter: blur(14px);
+            border-color: var(--line)
+        }
+
+        .header-inner {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .04em
+        }
+
+        .brand-mark {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            color: var(--lime)
+        }
+
+        .brand-mark:before,
+        .brand-mark:after {
+            content: "";
+            position: absolute;
+            left: 11px;
+            top: 1px;
+            width: 2px;
+            height: 22px;
+            background: currentColor
+        }
+
+        .brand-mark:after {
+            transform: rotate(90deg)
+        }
+
+        .brand-mark i:before,
+        .brand-mark i:after {
+            content: "";
+            position: absolute;
+            left: 11px;
+            top: 1px;
+            width: 2px;
+            height: 22px;
+            background: currentColor
+        }
+
+        .brand-mark i:before {
+            transform: rotate(45deg)
+        }
+
+        .brand-mark i:after {
+            transform: rotate(-45deg)
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px
+        }
+
+        .back-link {
+            font-size: 10px;
+            color: #b7b7b0
+        }
+
+        .back-link:hover {
+            color: var(--lime)
+        }
+
+        .header-cta {
+            padding: 9px 13px;
+            background: var(--lime);
+            color: #101010;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .06em
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            padding: 112px 0 74px;
+            background: var(--bg);
+            overflow: hidden
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px);
+            background-size: 82px 82px;
+            mask-image: linear-gradient(to bottom, #000, transparent 88%)
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(380px, .92fr);
+            gap: 68px;
+            align-items: center
+        }
+
+        .hero-copy {
+            max-width: 690px
+        }
+
+        .hero-number {
+            font-size: 9px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: #7d7d77;
+            margin-bottom: 20px
+        }
+
+        .hero-number span {
+            color: var(--lime)
+        }
+
+        .hero h1 {
+            font: 800 clamp(58px, 7vw, 92px)/.94 "Manrope", sans-serif;
+            letter-spacing: -.06em;
+            max-width: 780px
+        }
+
+        .hero h1 em {
+            display: block;
+            font-family: "Playfair Display", serif;
+            font-weight: 600;
+            color: #fff
+        }
+
+        .hero-description {
+            margin-top: 24px;
+            max-width: 650px;
+            color: #aaa9a2;
+            font-size: 14px;
+            line-height: 1.9
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            min-height: 42px;
+            padding: 0 16px;
+            border: 1px solid var(--line-2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            transition: transform .2s var(--ease), background .2s, color .2s
+        }
+
+        .btn:hover {
+            transform: translateY(-2px)
+        }
+
+        .btn-primary {
+            background: var(--lime);
+            border-color: var(--lime);
+            color: #111
+        }
+
+        .btn-secondary {
+            background: #1b1b1b;
+            color: #f4f4ef
+        }
+
+        .btn-secondary:hover {
+            background: #252525
+        }
+
+        .hero-tags {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+            margin-top: 34px
+        }
+
+        .hero-tags span {
+            padding: 7px 9px;
+            border: 1px solid var(--line);
+            background: #151515;
+            color: #989891;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: .08em
+        }
+
+        .service-visual {
+            position: relative;
+            min-height: 530px
+        }
+
+        .visual-ring {
+            position: absolute;
+            width: 330px;
+            height: 330px;
+            border: 1px solid rgba(184, 245, 45, .28);
+            border-radius: 50%;
+            right: 34px;
+            top: 42px
+        }
+
+        .visual-ring:before {
+            content: "";
+            position: absolute;
+            inset: 26px;
+            border: 1px dashed rgba(184, 245, 45, .18);
+            border-radius: 50%
+        }
+
+        .browser {
+            position: absolute;
+            width: min(100%, 470px);
+            right: 0;
+            top: 90px;
+            background: #181818;
+            border: 1px solid var(--line-2);
+            box-shadow: var(--shadow);
+            transform: rotate(-1deg)
+        }
+
+        .browser-top {
+            height: 36px;
+            padding: 0 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px solid var(--line);
+            background: #202020
+        }
+
+        .browser-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #60605c
+        }
+
+        .browser-dot.lime {
+            background: var(--lime)
+        }
+
+        .browser-code {
+            padding: 24px;
+            font: 500 11px/1.9 ui-monospace, SFMono-Regular, Menlo, monospace;
+            color: #8f9488
+        }
+
+        .browser-code .kw {
+            color: var(--lime)
+        }
+
+        .browser-code .str {
+            color: #d4d4ca
+        }
+
+        .browser-code .muted {
+            color: #595a55
+        }
+
+        .floating-tech {
+            position: absolute;
+            display: grid;
+            place-items: center;
+            width: 56px;
+            height: 56px;
+            background: #242424;
+            border: 1px solid var(--line-2);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, .25)
+        }
+
+        .floating-tech img {
+            width: 28px;
+            height: 28px
+        }
+
+        .ft-react {
+            left: 16px;
+            top: 54px
+        }
+
+        .ft-ts {
+            left: 64px;
+            bottom: 48px
+        }
+
+        .ft-next {
+            right: 18px;
+            bottom: 16px
+        }
+
+        .visual-note {
+            position: absolute;
+            left: 12px;
+            bottom: 136px;
+            color: #a4a49e;
+            font-size: 9px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            transform: rotate(-90deg);
+            transform-origin: left center
+        }
+
+        .star {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            right: -74px;
+            bottom: 34px;
+            opacity: .95
+        }
+
+        .proof-strip {
+            background: #191919;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line)
+        }
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr)
+        }
+
+        .proof {
+            min-height: 126px;
+            padding: 27px;
+            border-left: 1px solid var(--line);
+            display: flex;
+            flex-direction: column;
+            justify-content: center
+        }
+
+        .proof:last-child {
+            border-right: 1px solid var(--line)
+        }
+
+        .proof strong {
+            font-size: 17px
+        }
+
+        .proof span {
+            margin-top: 4px;
+            color: #777771;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: .08em
+        }
+
+        .section-head {
+            display: grid;
+            grid-template-columns: minmax(0, 7fr) minmax(260px, 5fr);
+            gap: 60px;
+            align-items: end;
+            margin-bottom: 48px
+        }
+
+        .section-head .section-copy {
+            margin: 0
+        }
+
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            padding-top: 16px
+        }
+
+        .deliverable {
+            position: relative;
+            min-height: 250px;
+            padding: 34px 24px 24px;
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, .055)
+        }
+
+        .deliverable.large {
+            grid-column: span 6
+        }
+
+        .deliverable.small {
+            grid-column: span 4
+        }
+
+         .deliverable-icon {
+            position: absolute;
+            left: 18px;
+            top: -15px;
+            width: 31px;
+            height: 31px;
+            border: 1px solid #52584a;
+            background: #202020;
+            display: grid;
+            place-items: center;
+            color: var(--lime)
+        }
+
+        .deliverable-icon svg {
+            width: 17px;
+            height: 17px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.7
+        }
+
+        .deliverable h3 {
+            margin-top: 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: -.01em
+        }
+
+        .deliverable p {
+            margin-top: 12px;
+            color: #8e8e87;
+            font-size: 12px;
+            line-height: 1.85
+        }
+
+        .deliverable ul {
+            list-style: none;
+            margin-top: 18px;
+            display: grid;
+            gap: 8px;
+            color: #b5b5ae;
+            font-size: 12px
+        }
+
+        .deliverable li:before {
+            content: "✓";
+            color: var(--lime);
+            margin-right: 7px
+        }
+
+        .stack-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 5.2fr) minmax(0, 6.8fr);
+            gap: 58px;
+            align-items: center
+        }
+
+        .stack-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .stack-card {
+            background: #252525;
+            border: 1px solid var(--line);
+            padding: 16px
+        }
+
+        .stack-card.wide {
+            grid-column: 1/-1
+        }
+
+        .stack-top {
+            display: grid;
+            grid-template-columns: 36px 1fr auto;
+            gap: 10px;
+            align-items: center
+        }
+
+        .stack-logo {
+            width: 35px;
+            height: 35px;
+            display: grid;
+            place-items: center;
+            background: #1a1a1a;
+            border: 1px solid var(--line)
+        }
+
+        .stack-logo img {
+            width: 21px;
+            height: 21px
+        }
+
+        .stack-top strong {
+            font-size: 10px;
+            text-transform: uppercase
+        }
+
+        .stack-top b {
+            font-size: 8px;
+            color: #c7c7c0
+        }
+
+        .bar {
+            height: 3px;
+            margin-top: 13px;
+            background: #3a3a38
+        }
+
+        .bar i {
+            display: block;
+            height: 100%;
+            background: var(--lime)
+        }
+
+        .stack-copy p {
+            margin-top: 15px;
+            color: #92928b;
+            font-size: 11px;
+            line-height: 1.85
+        }
+
+        .stack-copy .btn {
+            margin-top: 24px
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid var(--line);
+            border-left: 1px solid var(--line)
+        }
+
+        .process-step {
+            min-height: 270px;
+            padding: 26px;
+            border-right: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            background: #171717;
+            transition: background .25s
+        }
+
+        .process-step:hover {
+            background: #1e1e1e
+        }
+
+        .process-step span {
+            color: var(--lime);
+            font-size: 9px
+        }
+
+        .process-step h3 {
+            margin-top: 58px;
+            font-size: 15px;
+            text-transform: uppercase
+        }
+
+        .process-step p {
+            margin-top: 10px;
+            color: #8c8c86;
+            font-size: 12px;
+            line-height: 1.8
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 18px
+        }
+
+        .project {
+            background: #202020;
+            border: 1px solid var(--line);
+            overflow: hidden
+        }
+
+        .project-media {
+            height: 330px;
+            overflow: hidden;
+            background: #111
+        }
+
+        .project-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(.85) brightness(.84);
+            transition: transform .65s var(--ease), filter .35s
+        }
+
+        .project:hover img {
+            transform: scale(1.03);
+            filter: saturate(1) brightness(.92)
+        }
+
+        .project-copy {
+            padding: 22px
+        }
+
+        .project-copy span {
+            color: var(--lime);
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: .1em
+        }
+
+        .project-copy h3 {
+            font-size: 22px;
+            margin-top: 7px
+        }
+
+        .project-copy p {
+            margin-top: 8px;
+            color: #8e8e88;
+            font-size: 10px;
+            line-height: 1.75
+        }
+
+        .project-link {
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 9px;
+            border-bottom: 1px solid #555;
+            padding-bottom: 3px
+        }
+
+        .faq-layout {
+            display: grid;
+            grid-template-columns: minmax(250px, 4fr) minmax(0, 8fr);
+            gap: 58px
+        }
+
+        .faq-list {
+            border-top: 1px solid var(--line)
+        }
+
+        .faq {
+            border-bottom: 1px solid var(--line)
+        }
+
+        .faq button {
+            width: 100%;
+            padding: 20px 0;
+            background: none;
+            border: 0;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            text-align: left
+        }
+
+        .faq button strong {
+            font-size: 11px
+        }
+
+        .faq button span {
+            color: var(--lime);
+            font-size: 18px
+        }
+
+        .faq p {
+            display: none;
+            padding: 0 0 20px;
+            color: #8d8d87;
+            font-size: 10px;
+            line-height: 1.85;
+            max-width: 780px
+        }
+
+        .faq.open p {
+            display: block
+        }
+
+        .faq.open button span {
+            transform: rotate(45deg)
+        }
+
+        .contact-card {
+            display: grid;
+            grid-template-columns: minmax(0, 5fr) minmax(320px, 5fr);
+            gap: 48px;
+            padding: 46px;
+            background: #202020;
+            border: 1px solid var(--line)
+        }
+
+        .contact-card h2 {
+            font: 800 clamp(38px, 5vw, 58px)/1.03 "Manrope";
+            letter-spacing: -.04em
+        }
+
+        .contact-card h2 em {
+            font-family: "Playfair Display";
+            font-weight: 600
+        }
+
+        .contact-card p {
+            margin-top: 14px;
+            color: #92928b;
+            font-size: 11px;
+            line-height: 1.85;
+            max-width: 480px
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 24px
+        }
+
+        .contact-links a {
+            font-size: 9px;
+            border-bottom: 1px solid #555;
+            padding-bottom: 3px
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 12px
+        }
+
+        .contact-form label {
+            display: grid;
+            gap: 5px
+        }
+
+        .contact-form label span {
+            font-size: 8px;
+            color: #85857f;
+            text-transform: uppercase;
+            letter-spacing: .1em
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--line);
+            background: #2a2a2a;
+            color: #fff;
+            outline: none
+        }
+
+        .contact-form textarea {
+            min-height: 118px;
+            resize: vertical
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--lime)
+        }
+
+        .form-status {
+            min-height: 16px;
+            font-size: 9px;
+            color: #a6a69f
+        }
+
+        .footer {
+            padding: 25px 0;
+            border-top: 1px solid var(--line);
+            background: #0a0a0a
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap
+        }
+
+        .footer p,
+        .footer a,
+        .footer small {
+            font-size: 9px;
+            color: #71716c
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 16px
+        }
+
+        .footer a:hover {
+            color: var(--lime)
+        }
+
+        @media(max-width:1000px) {
+
+            .hero-grid,
+            .stack-layout,
+            .faq-layout,
+            .contact-card {
+                grid-template-columns: 1fr
+            }
+
+            .service-visual {
+                min-height: 480px;
+                max-width: 600px;
+                margin-inline: auto;
+                width: 100%
+            }
+
+            .section-head {
+                grid-template-columns: 1fr
+            }
+
+            .section-head .section-copy {
+                margin-top: 0
+            }
+
+            .deliverable.large {
+                grid-column: span 6
+            }
+
+            .deliverable.small {
+                grid-column: span 6
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr
+            }
+
+            .proof-grid {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .proof:nth-child(2) {
+                border-right: 1px solid var(--line)
+            }
+
+            .project-media {
+                height: 300px
+            }
+        }
+
+        @media(max-width:700px) {
+            .container {
+                width: min(calc(100% - 30px), var(--max))
+            }
+
+            .section {
+                padding: 82px 0
+            }
+
+            .header-actions .back-link {
+                display: none
+            }
+
+            .hero {
+                padding-top: 102px
+            }
+
+            .hero h1 {
+                font-size: 48px
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch
+            }
+
+            .btn {
+                width: 100%
+            }
+
+            .service-visual {
+                min-height: 410px
+            }
+
+            .browser {
+                top: 78px
+            }
+
+            .visual-ring {
+                width: 265px;
+                height: 265px;
+                right: 15px
+            }
+
+            .floating-tech {
+                width: 48px;
+                height: 48px
+            }
+
+            .ft-react {
+                left: 0
+            }
+
+            .deliverable.large,
+            .deliverable.small {
+                grid-column: span 12
+            }
+
+            .stack-grid {
+                grid-template-columns: 1fr
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr
+            }
+
+            .proof-grid {
+                grid-template-columns: 1fr
+            }
+
+            .proof {
+                border-right: 1px solid var(--line)
+            }
+
+            .contact-card {
+                padding: 27px 22px
+            }
+
+            .project-media {
+                height: 240px
+            }
+
+            .star {
+                width: 110px;
+                height: 110px;
+                right: -50px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            html {
+                scroll-behavior: auto
+            }
+
+            *,
+            *:before,
+            *:after {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="haris-portfolio-reference-match-v4-linked.html" class="brand"
+                aria-label="Back to Haris portfolio"><span class="brand-mark"><i></i></span><span>HARIS</span></a>
+            <div class="header-actions"><a class="back-link" href="haris-portfolio-reference-match-v4-linked.html">←
+                    Back to portfolio</a><a class="header-cta" href="#contact">Start a project</a></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="container hero-grid">
+                <div class="hero-copy reveal">
+                    <div class="hero-number"><span>Service 01</span> / Frontend development</div>
+                    <div class="section-label">What I build</div>
+                    <h1>Frontend <em>development</em></h1>
+                    <p class="hero-description">I turn product requirements, Figma designs and existing application
+                        ideas into responsive, maintainable web experiences using React, Next.js and TypeScript. The
+                        goal is not only a good-looking interface—it is a frontend that feels clear, fast and ready for
+                        real users.</p>
+                    <div class="hero-actions"><a class="btn btn-primary" href="#contact">Start a frontend project</a><a
+                            class="btn btn-secondary" href="#work">View relevant work</a></div>
+                    <div class="hero-tags"><span>React</span><span>Next.js</span><span>TypeScript</span><span>Responsive
+                            UI</span><span>API integration</span></div>
+                </div>
+
+                <div class="service-visual reveal" aria-label="Frontend development visual">
+                    <div class="visual-ring"></div>
+                    <div class="browser">
+                        <div class="browser-top"><i class="browser-dot lime"></i><i class="browser-dot"></i><i
+                                class="browser-dot"></i></div>
+                        <div class="browser-code"><span class="muted">// product interface</span><br><span
+                                class="kw">export default</span> <span class="str">function</span> ProductScreen()
+                            {<br>&nbsp;&nbsp;<span class="kw">return</span> (<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;main
+                            className=<span
+                                class="str">"responsive-ui"</span>&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Hero
+                            /&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ProductFlow
+                            /&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ApiState
+                            /&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/main&gt;<br>&nbsp;&nbsp;);<br>}</div>
+                    </div>
+                    <div class="floating-tech ft-react"><img src="https://cdn.simpleicons.org/react/61DAFB" alt="React">
+                    </div>
+                    <div class="floating-tech ft-ts"><img src="https://cdn.simpleicons.org/typescript/3178C6"
+                            alt="TypeScript"></div>
+                    <div class="floating-tech ft-next"><img src="https://cdn.simpleicons.org/nextdotjs/FFFFFF"
+                            alt="Next.js"></div>
+                    <div class="visual-note">Built for real product use</div>
+                    <svg class="star" viewBox="0 0 160 160" aria-hidden="true">
+                        <path
+                            d="M76 10h8v56l39-39 6 6-39 39h56v8H90l39 39-6 6-39-39v56h-8V86l-39 39-6-6 39-39H14v-8h56L31 33l6-6 39 39V10Z"
+                            fill="none" stroke="#b8f52d" stroke-width="3" />
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="proof-strip">
+            <div class="container proof-grid reveal">
+                <div class="proof"><strong>Responsive</strong><span>Desktop · tablet · mobile</span></div>
+                <div class="proof"><strong>Reusable</strong><span>Components & patterns</span></div>
+                <div class="proof"><strong>Connected</strong><span>APIs & application state</span></div>
+                <div class="proof"><strong>Maintainable</strong><span>Clean frontend structure</span></div>
+            </div>
+        </section>
+
+        <section class="section charcoal" id="deliverables">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div>
+                        <div class="section-label">Frontend capabilities</div>
+                        <h2 class="section-title">What I can <em>build</em></h2>
+                    </div>
+                    <p class="section-copy">Frontend development can mean very different things depending on the
+                        product. I can join at the design-to-code stage, build a new interface from scratch, or improve
+                        an existing frontend that has become difficult to maintain.</p>
+                </div>
+                <div class="deliverables-grid">
+                    <article class="deliverable large reveal">
+                        <div class="deliverable-icon"><svg viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="16" rx="2" />
+                                <path d="M3 9h18M8 4v16" />
+                            </svg></div>
+                        <h3>Web applications & SaaS</h3>
+                        <p>Responsive application interfaces with product flows, authenticated states, dashboards,
+                            settings, tables and the UI details needed by real software products.</p>
+                        <ul>
+                            <li>Dashboard and application UI</li>
+                            <li>Reusable component architecture</li>
+                            <li>State and data-driven views</li>
+                        </ul>
+                    </article>
+                    <article class="deliverable large reveal">
+                        <div class="deliverable-icon"><svg viewBox="0 0 24 24">
+                                <rect x="4" y="4" width="16" height="16" rx="2" />
+                                <path d="M8 8h8M8 12h5M8 16h7" />
+                            </svg></div>
+                        <h3>Design to frontend</h3>
+                        <p>Translate Figma or design files into a working product while preserving spacing, hierarchy,
+                            typography, interaction states and responsive behavior.</p>
+                        <ul>
+                            <li>High-fidelity implementation</li>
+                            <li>Responsive design translation</li>
+                            <li>Reusable styles and UI patterns</li>
+                        </ul>
+                    </article>
+                    <article class="deliverable small reveal">
+                        <div class="deliverable-icon"><svg viewBox="0 0 24 24">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg></div>
+                        <h3>Landing pages</h3>
+                        <p>Fast marketing and product pages with strong hierarchy, mobile behavior and
+                            conversion-focused UI.</p>
+                        <ul>
+                            <li>Marketing pages</li>
+                            <li>Product launches</li>
+                        </ul>
+                    </article>
+                    <article class="deliverable small reveal">
+                        <div class="deliverable-icon"><svg viewBox="0 0 24 24">
+                                <path d="M4 5h16v14H4zM4 10h16M9 10v9" />
+                            </svg></div>
+                        <h3>Admin panels</h3>
+                        <p>Dense interfaces for internal tools, dashboards, tables, filters, forms and operational
+                            workflows.</p>
+                        <ul>
+                            <li>Forms & validation</li>
+                            <li>Data-heavy layouts</li>
+                        </ul>
+                    </article>
+                    <article class="deliverable small reveal">
+                        <div class="deliverable-icon"><svg viewBox="0 0 24 24">
+                                <path d="M8 12l3 3 5-6" />
+                                <circle cx="12" cy="12" r="9" />
+                            </svg></div>
+                        <h3>Frontend cleanup</h3>
+                        <p>Improve consistency, responsiveness and maintainability in an existing React or Next.js
+                            product.</p>
+                        <ul>
+                            <li>UI refactors</li>
+                            <li>Component consolidation</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section dark" id="stack">
+            <div class="container stack-layout">
+                <div class="stack-grid reveal">
+                    <div class="stack-card">
+                        <div class="stack-top"><span class="stack-logo"><img
+                                    src="https://cdn.simpleicons.org/react/61DAFB"
+                                    alt="React"></span><strong>React</strong><b>Core</b></div>
+                        <div class="bar"><i style="width:96%"></i></div>
+                    </div>
+                    <div class="stack-card">
+                        <div class="stack-top"><span class="stack-logo"><img
+                                    src="https://cdn.simpleicons.org/typescript/3178C6"
+                                    alt="TypeScript"></span><strong>TypeScript</strong><b>Core</b></div>
+                        <div class="bar"><i style="width:93%"></i></div>
+                    </div>
+                    <div class="stack-card wide">
+                        <div class="stack-top"><span class="stack-logo"><img
+                                    src="https://cdn.simpleicons.org/nextdotjs/FFFFFF"
+                                    alt="Next.js"></span><strong>Next.js / App frontend</strong><b>Core</b></div>
+                        <div class="bar"><i style="width:95%"></i></div>
+                    </div>
+                    <div class="stack-card">
+                        <div class="stack-top"><span class="stack-logo"><img
+                                    src="https://cdn.simpleicons.org/tailwindcss/06B6D4"
+                                    alt="Tailwind CSS"></span><strong>Tailwind CSS</strong><b>UI</b></div>
+                        <div class="bar"><i style="width:90%"></i></div>
+                    </div>
+                    <div class="stack-card">
+                        <div class="stack-top"><span class="stack-logo"><img
+                                    src="https://cdn.simpleicons.org/figma/F24E1E"
+                                    alt="Figma"></span><strong>Figma</strong><b>Handoff</b></div>
+                        <div class="bar"><i style="width:88%"></i></div>
+                    </div>
+                </div>
+                <div class="stack-copy reveal">
+                    <div class="section-label">Frontend stack</div>
+                    <h2 class="section-title">Tools I use for <em>product frontend</em></h2>
+                    <p>React and TypeScript are at the center of my frontend work. Next.js is useful when the product
+                        needs routing, server rendering, data integration or a full application structure. I choose
+                        styling and component approaches based on the existing product rather than forcing one stack
+                        everywhere.</p><a class="btn btn-primary" href="#contact">Discuss your stack</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section charcoal" id="process">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div>
+                        <div class="section-label">How I work</div>
+                        <h2 class="section-title">From brief to <em>frontend build</em></h2>
+                    </div>
+                    <p class="section-copy">The exact process changes by project, but the goal stays the same:
+                        understand the product first, build in visible stages, and handle the details before delivery.
+                    </p>
+                </div>
+                <div class="process-grid">
+                    <article class="process-step reveal"><span>01</span>
+                        <h3>Understand</h3>
+                        <p>Review requirements, designs, users, existing code and what needs to be delivered.</p>
+                    </article>
+                    <article class="process-step reveal"><span>02</span>
+                        <h3>Structure</h3>
+                        <p>Plan layout, components, application states and the frontend architecture needed for the
+                            feature.</p>
+                    </article>
+                    <article class="process-step reveal"><span>03</span>
+                        <h3>Build</h3>
+                        <p>Implement responsive components, data states, interactions and API-connected product flows.
+                        </p>
+                    </article>
+                    <article class="process-step reveal"><span>04</span>
+                        <h3>Refine</h3>
+                        <p>Review responsiveness, empty/loading/error states, polish and maintainability before handoff.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section dark" id="work">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div>
+                        <div class="section-label">Relevant work</div>
+                        <h2 class="section-title">Frontend-focused <em>projects</em></h2>
+                    </div>
+                    <p class="section-copy">A few portfolio examples that demonstrate product UI, responsive frontend
+                        work and application-oriented interfaces.</p>
+                </div>
+                <div class="projects-grid">
+                    <article class="project reveal">
+                        <div class="project-media"><img src="imgs/inpay-1024x522-1-768x392.png"
+                                alt="InPay frontend project" loading="lazy"></div>
+                        <div class="project-copy"><span>FinTech · Product UI</span>
+                            <h3>InPay</h3>
+                            <p>A payment application interface built around clear product hierarchy, responsive
+                                presentation and user-facing payment flows.</p><a class="project-link"
+                                href="haris-portfolio-reference-match-v4-linked.html#work">View in portfolio ↗</a>
+                        </div>
+                    </article>
+                    <article class="project reveal">
+                        <div class="project-media"><img src="imgs/brandd.png" alt="LyveCom frontend project"
+                                loading="lazy"></div>
+                        <div class="project-copy"><span>Commerce · Product UX</span>
+                            <h3>LyveCom</h3>
+                            <p>A video-commerce product experience showing how content, product discovery and shopping
+                                UI can work together.</p><a class="project-link"
+                                href="haris-portfolio-reference-match-v4-linked.html#work">View in portfolio ↗</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section charcoal" id="faq">
+            <div class="container faq-layout">
+                <div class="reveal">
+                    <div class="section-label">Questions</div>
+                    <h2 class="section-title">Frontend <em>FAQ</em></h2>
+                    <p class="section-copy">A few common questions before starting frontend work.</p>
+                </div>
+                <div class="faq-list reveal">
+                    <div class="faq open"><button type="button"><strong>Can you work from an existing Figma
+                                design?</strong><span>+</span></button>
+                        <p>Yes. I can translate existing screens into responsive frontend components while preserving
+                            layout, hierarchy, states and design details.</p>
+                    </div>
+                    <div class="faq"><button type="button"><strong>Can you join an existing React or Next.js
+                                codebase?</strong><span>+</span></button>
+                        <p>Yes. Existing products often need features, UI cleanup, responsive fixes or component
+                            refactoring rather than a full rebuild.</p>
+                    </div>
+                    <div class="faq"><button type="button"><strong>Do you connect the frontend to
+                                APIs?</strong><span>+</span></button>
+                        <p>Yes. Frontend work can include REST API integration, forms, authentication-facing flows,
+                            loading/error states and data-driven interface behavior.</p>
+                    </div>
+                    <div class="faq"><button type="button"><strong>Is this only for large web
+                                applications?</strong><span>+</span></button>
+                        <p>No. The same service can fit a product feature, dashboard, admin interface, marketing site,
+                            landing page or a broader SaaS frontend.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section dark" id="contact">
+            <div class="container">
+                <div class="contact-card reveal">
+                    <div>
+                        <div class="section-label">Frontend project</div>
+                        <h2>Have a frontend build <em>in mind?</em></h2>
+                        <p>Send me the product, design or current frontend situation. A short message is enough to
+                            start—what you are building, where you are stuck and what you want improved.</p>
+                        <div class="contact-links"><a href="mailto:m.haris4561@gmail.com">Email ↗</a><a
+                                href="https://www.linkedin.com/in/muhammadharis802/" target="_blank"
+                                rel="noopener">LinkedIn ↗</a><a href="https://github.com/hariskhan802" target="_blank"
+                                rel="noopener">GitHub ↗</a></div>
+                    </div>
+                    <form class="contact-form" action="https://formspree.io/f/xyzawygr" method="POST"><input
+                            type="hidden" name="project_type"
+                            value="Frontend development"><label><span>Name</span><input name="name" autocomplete="name"
+                                placeholder="Your name" required></label><label><span>Email</span><input type="email"
+                                name="_replyto" autocomplete="email" placeholder="you@company.com"
+                                required></label><label><span>Message</span><textarea name="message"
+                                placeholder="What are you building and what frontend help do you need?"
+                                required></textarea></label><button class="btn btn-primary" type="submit">Send project
+                            details</button>
+                        <p class="form-status" aria-live="polite"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <p>Frontend Development — Haris</p>
+            <div class="footer-links"><a href="haris-portfolio-reference-match-v4-linked.html">Portfolio</a><a
+                    href="#work">Work</a><a href="#contact">Contact</a></div><small>© <span id="year"></span>
+                Haris</small>
+        </div>
+    </footer>
+
+    <script>
+        const $ = (s, scope = document) => scope.querySelector(s); const $$ = (s, scope = document) => [...scope.querySelectorAll(s)];
+        const header = $('#header'); window.addEventListener('scroll', () => header?.classList.toggle('scrolled', window.scrollY > 14), { passive: true });
+        $('#year').textContent = new Date().getFullYear();
+        const observer = new IntersectionObserver((entries, o) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); o.unobserve(e.target) } }), { threshold: .12 }); $$('.reveal').forEach(el => observer.observe(el));
+        $$('.faq button').forEach(btn => btn.addEventListener('click', () => btn.parentElement.classList.toggle('open')));
+        const form = $('.contact-form'), status = $('.form-status'); form?.addEventListener('submit', async e => { e.preventDefault(); const button = $('button[type="submit"]', form), original = button.textContent; button.disabled = true; button.textContent = 'Sending…'; status.textContent = ''; try { const r = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } }); if (!r.ok) throw new Error(); form.reset(); status.textContent = 'Message sent. I’ll get back to you as soon as possible.' } catch { status.textContent = 'Could not send here. Please use the email link instead.' } finally { button.disabled = false; button.textContent = original } });
+    </script>
+</body>
+
+</html>
